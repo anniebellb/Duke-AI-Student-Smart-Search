@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Genially Embed</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+    .outer-container {
+      width: 100%;
+    }
+    .iframe-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      padding-top: 0;
+      height: 0;
+    }
+    .iframe-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="outer-container">
+    <div class="iframe-wrapper">
+      <iframe 
+        title="Real, or Rendered?" 
+        frameborder="0" 
+        width="1200" 
+        height="675" 
+        src="https://view.genially.com/687e71891177da39155a8e4e" 
+        type="text/html" 
+        allowscriptaccess="always" 
+        allowfullscreen="true" 
+        scrolling="yes" 
+        allownetworking="all">
+      </iframe>
+    </div>
+  </div>
+
+                                    <script>
+                                        var injectMightyInteractiveJavascript = (options) => {
+    var _a;
+    options.document = (_a = options.document) !== null && _a !== void 0 ? _a : window.document;
+    const { key, document, postIsReadyMessage } = options;
+    if (document.getElementById('mighty-interactive-core-js')) {
+        return;
+    }
+    const script = document.createElement('script');
+    script.id = 'mighty-interactive-core-js';
+    // Once legacy blocks are removed, we can remove the following legacy messages:
+    //      MIGHTY_INTERACTIVE_LOAD
+    //  MIGHTY_INTERACTIVE
+    script.innerHTML = `
+        window.parent.postMessage({ type: 'MIGHTY_INTERACTIVE_LOAD', data: {key: '${key}'} }, '*');
+        window.parent.postMessage({type: 'MIGHTY_INTERACTIVE_LOADED'}, '*');
+
+        function postMightyInteractiveHeightReport(){
+            const height = document.documentElement.offsetHeight;
+
+            window.parent.postMessage(
+                {
+                    type: 'MIGHTY_INTERACTIVE_HEIGHT_REPORT',
+                    data: {
+                        height: height,
+                    },
+                },
+                '*'
+            );
+
+            window.parent.postMessage(
+                {
+                    type: 'MIGHTY_INTERACTIVE',
+                    data: {
+                        key: '${key}',
+                        height: height,
+                    },
+                },
+                '*'
+            );            
+        }
+
+        function initResizeObserver() {
+            postMightyInteractiveHeightReport();
+
+            new ResizeObserver(() => {
+                postMightyInteractiveHeightReport();
+            }).observe(document.documentElement);
+        }
+        if (document.readyState === 'complete') {
+            initResizeObserver();
+        } else {
+            document.onreadystatechange = () => {
+                if (document.readyState === 'complete') {
+                    initResizeObserver();
+                }
+            };
+        }
+
+        window.addEventListener('message', (event) => {
+            if (event.data.type === 'MIGHTY_INTERACTIVE_SCREENCAP') {
+                const html = event.data.data.html;
+                const domParser = new window.DOMParser();
+                const snapshot = domParser.parseFromString(html, 'text/html');
+                document.replaceChild(snapshot.documentElement, document.documentElement);
+            }
+        });
+    `;
+    if (postIsReadyMessage) {
+        script.innerHTML += `
+            window.parent.postMessage({type: 'MIGHTY_INTERACTIVE_READY'}, '*');
+        `;
+    }
+    document.body.appendChild(script);
+};
+
+                                        injectMightyInteractiveJavascript({
+                                            key: '7de4ee96-6cd8-44fe-a5c5-319ff545ee3d',
+                                            postIsReadyMessage: true
+                                        })
+                                    </script>
+                                    <script>
+                                        
+                                    </script>
+                                    <style>
+                                        
+                                    </style>
+                                    </body>
+</html>
